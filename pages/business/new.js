@@ -51,7 +51,7 @@ export default function NewBusiness() {
         firestore.collection('store').add({
             createdBy: user.uid,
             createdAt: now,
-            name: formData.name,
+            businessName: formData.businessName,
             website: formData.website,
             phone: formData.phone,
             address: {
@@ -93,8 +93,8 @@ export default function NewBusiness() {
                     {/*Business info fields*/}
                     <VStack w="100%">
                         <Input
-                            name="name"
-                            value={formData.name}
+                            name="businessName"
+                            value={formData.businessName}
                             onChange={setFormData}
                             placeholder="Business name *" required size="md"/>
                         <Input name="website"
