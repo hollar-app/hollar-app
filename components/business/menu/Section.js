@@ -12,7 +12,10 @@ import {
     Spacer,
     Button
 } from "@chakra-ui/react"
-import {CheckIcon, CloseIcon, EditIcon, DeleteIcon, AddIcon} from "@chakra-ui/icons"
+import {
+    CheckIcon, CloseIcon, EditIcon, DeleteIcon, AddIcon,
+    SmallCloseIcon
+} from "@chakra-ui/icons"
 import fb from "../../../util/firebaseConfig";
 import {useState} from "react";
 import CreateItemDialog from "./CreateItemDialog";
@@ -79,7 +82,8 @@ export default function SectionCard({section, menuID}) {
     }
 
     return <>
-        <CreateItemDialog sectionID={section.id} menuID={menuID} sectionRef={sectionRef} isOpen={newItemModal} onClose={closeModal} formData={newItemModalData}/>
+        <CreateItemDialog sectionID={section.id} menuID={menuID} sectionRef={sectionRef} isOpen={newItemModal}
+                          onClose={closeModal} formData={newItemModalData}/>
         <Box w="100%" borderWidth={0.25} borderRadius={8} mb={4}>
             <HStack justifyContent="space-between" p={3} px={5}>
                 <EditableTitle value={section.sectionTitle} onChange={value => changeTitle(value)}/>
@@ -100,7 +104,8 @@ export default function SectionCard({section, menuID}) {
                             <Text fontSize="sm">{item.description}</Text>
                         </Box>
                         <Spacer/>
-                        <IconButton aria-label="Edit Item" variant="ghost" onClick={() => toggleNewItemModal(true)} icon={<EditIcon/>}/>
+                        <IconButton aria-label="Edit Item" variant="ghost"
+                                    icon={<SmallCloseIcon/>}/>
                     </HStack>
                 </HStack>) : <p>Add an item</p>}
             </VStack>
