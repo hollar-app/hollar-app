@@ -57,24 +57,22 @@ export default function() {
   ]);
 
   useEffect(() => {
-    var getOrders = fb.functions().httpsCallable('getOrders');
-    getOrders({ storeId: store_id })
-      .then((result) => {
-        setPendingOrders(result.data.pendingOrders);
-        setCompletedOrders(result.data.completedOrders);
-      });
+    // var getOrders = fb.functions().httpsCallable('getOrders');
+    // getOrders({ storeId: store_id })
+    //   .then((result) => {
+    //     setPendingOrders(result.data.pendingOrders);
+    //     setCompletedOrders(result.data.completedOrders);
+    //   });
   })
 
   function renderOrderList(isPending, dataList){
-    return dataList.map((sectionObject, index) => {
-
-      return (
-        <OrderView 
-          isPending={isPending}
-          order={sectionObject}
-        />
-      );
-    })
+    return dataList.map((sectionObject, index) => 
+      <OrderView 
+        key={index}
+        isPending={isPending}
+        order={sectionObject}
+      />
+    )
   }
 
   return(
@@ -95,10 +93,10 @@ export default function() {
 
           <TabPanels>
             <TabPanel>
-              { renderOrderList(true, pendingOrders) }
+              { renderOrderList(true, data) }
             </TabPanel>
             <TabPanel>
-              { renderOrderList(false, completedOrders) }
+              { renderOrderList(false, data) }
             </TabPanel>
             <TabPanel>
               Hello
