@@ -16,7 +16,7 @@ import Section from "./Section";
 import { useContext, useEffect, useReducer, useState } from "react";
 import { getLocalStorageCartItems, setLocalStorageCartItems } from "../../util/localStorage";
 
-export default function Storefront({pageData}) {
+export default function Storefront({pageData, store_id}) {
   const [itemQuantity, setItemQuantity] = useState({});
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export default function Storefront({pageData}) {
     if (pageData.sections != undefined) {
       pageData.sections.map((val, index, arr) => {
         console.log("in the map ==>", val)
-      })   
+      })
     }
 
     var cartCurrent = getLocalStorageCartItems();
@@ -57,7 +57,7 @@ export default function Storefront({pageData}) {
         "title": itemData.title,
         "item_id": itemData.item_id,
         "price": itemData.price,
-        "store_id": pageData.storeId,
+        "store_id": store_id,
         "image_url": itemData.itemImage,
         "quantity": 1
       }
@@ -95,7 +95,7 @@ export default function Storefront({pageData}) {
             {pageData.sections != undefined && pageData.sections.map(section => 
               <Section 
                 section={section} 
-                storeId={pageData.storeId} 
+                store_id={store_id} 
                 itemQuantity={itemQuantity}
                 addToCart={addToCart}
               />)}

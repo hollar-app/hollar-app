@@ -18,6 +18,7 @@ import {
 } from "@chakra-ui/react";
 import { getLocalStorageCartItems, setLocalStorageCartItems } from "../../util/localStorage.js";
 import SessionContext from "../../util/SessionContext";
+import Router from 'next/router';
 
 export default function checkout(props){
 
@@ -62,6 +63,7 @@ export default function checkout(props){
     createOrder({ order: form })
       .then((result) => {
         console.log(JSON.stringify(result.data));
+        Router.reload();
       });
 
     return;

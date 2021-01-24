@@ -8,7 +8,7 @@ import { useContext, useEffect, useReducer, useState } from "react";
 import { getLocalStorageCartItems, setLocalStorageCartItems } from "../../../util/localStorage";
 
 
-export default function Section({ section, storeId, itemQuantity, addToCart }) {
+export default function Section({ section, store_id, itemQuantity, addToCart }) {
 
   // const [itemQuantity, setItemQuantity] = useState({})
 
@@ -16,12 +16,13 @@ export default function Section({ section, storeId, itemQuantity, addToCart }) {
     // console.log("section data", section);
   }, [])
 
-  function onAddButton(id, title, price, itemImage, storeId) {
+  function onAddButton(id, title, price, itemImage, store_id) {
     addToCart({ 
       title: title, 
       item_id: id, 
       price: price, 
       image_url: itemImage, 
+      store_id: store_id
     });
   }
 
@@ -52,7 +53,7 @@ export default function Section({ section, storeId, itemQuantity, addToCart }) {
 
 
                           <HStack align="flex-start">
-                            <Button onClick={() => onAddButton(value.id, value.title, value.price, value.itemImage, section.storeId)} variant="outline" size="sm" w="50%" leftIcon={<AddIcon />} >
+                            <Button onClick={() => onAddButton(value.id, value.title, value.price, value.itemImage, section.store_id)} variant="outline" size="sm" w="50%" leftIcon={<AddIcon />} >
                               <Text>cart</Text> 
                             </Button>
 

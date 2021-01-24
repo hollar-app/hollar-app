@@ -11,7 +11,7 @@ export default function(){
   const router = useRouter();
 
   const adOne = {
-    imageUrl: "https://prods3.imgix.net/images/articles/2017_05/Non-Feature-shake-shack-cheese-burger-recipe.jpg",
+    imageUrl: "https://images.unsplash.com/photo-1528800190552-c3aae2994f70?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
     title: "Blue Bottle",
     store_id: "B9BjBsZZ726zkoVAwHec", 
   }

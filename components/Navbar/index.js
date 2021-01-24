@@ -43,7 +43,7 @@ export default function Navbar({links = [], loading, showCart=false}) {
                 <Spacer/>
 
                 {showCart && localStorage.getItem("hollar-cart") != undefined && 
-                <Button variant="ghost" onClick={() => router.push('/storefront/checkout')}>Items in cart: {localStorage.getItem("hollar-cart").length}</Button>
+                <Button variant="ghost" onClick={() => router.push('/storefront/checkout')}>Cart</Button>
                 }
                 {showCart && localStorage.getItem("hollar-cart") == undefined && 
                     <> <AiOutlineShoppingCart size={25}/> <Text>No items in cart</Text></>

@@ -29,6 +29,6 @@ export default function StoreFront() {
 
     return <>
       <NavbarComplete showCart={true} />
-      <Storefront pageData={menuData} storeId={store_id}/>
+      <Storefront pageData={menuData} store_id={store_id}/>
     </>
 }

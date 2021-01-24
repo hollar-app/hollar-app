@@ -11,6 +11,7 @@ import {
   AlertDialogOverlay,
 } from "@chakra-ui/react";
 import fb from "../../util/firebaseConfig";
+import Router from 'next/router';
 
 export default function({ isPending, order }) {
 
@@ -33,6 +34,7 @@ export default function({ isPending, order }) {
     completeOrder({ orderId: order.orderID })
     .then((result) => {
       const results = result.data;
+      Router.reload();
       console.log(results);
     });
  
