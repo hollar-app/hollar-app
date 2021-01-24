@@ -1,5 +1,7 @@
 
+import NavbarComplete from "../../components/NavbarComplete";
 import { useContext, useEffect, useReducer, useState } from "react";
+import fb from "../../util/firebaseConfig";
 import {
     Avatar,
     Box,
@@ -15,50 +17,38 @@ import {
     Divider
 } from "@chakra-ui/react";
 import { getLocalStorageCartItems, setLocalStorageCartItems } from "../../util/localStorage.js";
+import SessionContext from "../../util/SessionContext";
 
 export default function checkout(props){
 
-  // const items = [
-  //   {
-  //     itemID: "blehhhhh", 
-  //     title: "fruit cup", 
-  //     imageURL: "https://images.unsplash.com/photo-1524904237821-786af6d620ca?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80", 
-  //     cost: 3, 
-  //     quantity: 1
-  //   }, 
-  //   {
-  //     itemID: "blaaaaaaaahh", 
-  //     title: "burger", 
-  //     imageURL: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1202&q=80", 
-  //     cost: 10, 
-  //     quantity: 2
-  //   }, 
-  // ]
-
+  const {status, user} = useContext(SessionContext)
   const [items, setItems] = useState([]);
   const [form, setForm] = useState({});
 
-  const [totalCost, setTotalCost] = useState(0);
   useEffect(() => {
 
     // get user id from session storage (eg in components/navbar/index.js);
     var tempItems = getLocalStorageCartItems();
     console.log("local storage in checkout");
     console.log(JSON.stringify(tempItems));
-    var storeID = tempItems.store_id;
-    delete tempItems["storeID"];
+    var storeID = tempItems["store_id"];
+    delete tempItems["store_id"];
     setItems(tempItems);
 
     var total = 0;
-    items.map((value, index) => {
-      total += value.cost * value.quantity;
+    tempItems.forEach((value, index) => {
+      total += value.price.toString() * value.quantity;
     });
-    setTotalCost(total);
 
     setForm({
-      items: items,
+      customer: {
+        name: user.displayName, 
+        id: user.uid
+      }, 
+      items: tempItems,
       storeID: storeID, 
-      totalCost: totalCost, 
+      totalCost: total, 
+      completed: false
     });
   }, [])
 
@@ -66,11 +56,23 @@ export default function checkout(props){
     localStorage.clear();
     var temp = getLocalStorageCartItems();
     console.log("order sent")
+    console.log(JSON.stringify(form, null, 2));
+
+    var createOrder = fb.functions().httpsCallable('createOrder');
+    createOrder({ order: form })
+      .then((result) => {
+        console.log(JSON.stringify(result.data));
+      });
+
     return;
   }
 
   return(
-    <Container maxW="5xl" centerContent textAlign="center" p={4}>
+    <>
+      <NavbarComplete />
+
+
+      <Container maxW="5xl" centerContent textAlign="center" p={4}>
         <Box opacity={0.9} w="50%" my={10} borderRadius={12} overflow="hidden">
 
           <Heading size="3xl" my={20}>CHECKOUT</Heading>
@@ -79,8 +81,9 @@ export default function checkout(props){
             {items.map((item, index) => <>
               <ListItem key={index} lineHeight={1.25}>
                 <HStack>
-                  {item.image_url&&
-                  <Image src={item.image_url} w="24" h="24" mr={5} alt="" objectFit="cover" borderRadius={8}/>}
+                  {item.image_url &&
+                    <Image src={item.image_url} w="24" h="24" mr={5} alt="" objectFit="cover" borderRadius={8}/>
+                  }
 
                   <VStack align="start">
                     <Heading as="h3" size="lg">{item.title}</Heading>
@@ -101,7 +104,8 @@ export default function checkout(props){
           </Container>
 
         </Box>
-    </Container>
+      </Container>
+    </>
 
   );
 }

@@ -24,7 +24,8 @@ export default function CreateItemDialog({isOpen, onClose, formData, sectionID, 
             items: fb.firestore.FieldValue.arrayUnion({
                 title: event.target.title.value,
                 price: event.target.price.value,
-                description: event.target.description.value
+                description: event.target.description.value, 
+                itemImage: "https://images.unsplash.com/photo-1608930532174-18ff53f01438?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=701&q=80"
             })
         })
             .then(onClose)
@@ -43,7 +44,9 @@ export default function CreateItemDialog({isOpen, onClose, formData, sectionID, 
                             <Textarea id="description" defaultValue={formData.description}
                                       placeholder="Item Description"/>
                             <Flex justifyContent="flex-start" w="100%">
-                                <Button variant="outline">Upload Image</Button>
+                                <Button variant="outline">
+                                  <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" />
+                                </Button>
                             </Flex>
                         </VStack>
 

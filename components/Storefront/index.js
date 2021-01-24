@@ -17,25 +17,61 @@ import { useContext, useEffect, useReducer, useState } from "react";
 import { getLocalStorageCartItems, setLocalStorageCartItems } from "../../util/localStorage";
 
 export default function Storefront({pageData}) {
+  const [itemQuantity, setItemQuantity] = useState({});
 
-    const [itemQuantity, setItemQuantity] = useState({});
+  useEffect(() => {
+    // console.log(pageData.sections) 
+    if (pageData.sections != undefined) {
+      pageData.sections.map((val, index, arr) => {
+        console.log("in the map ==>", val)
+      })   
+    }
 
-    useEffect(() => {
-        // console.log(pageData.sections) 
-        if (pageData.sections != undefined) {
-            pageData.sections.map((val, index, arr) => {
-                console.log("in the map ==>", val)
-            })   
-        }
+    var cartCurrent = getLocalStorageCartItems();
+    var itemQuantityCopy = {};
+    cartCurrent.map((item, index) => {
+      itemQuantityCopy[item.item_id] = item.quantity;
+    });
+    setItemQuantity(itemQuantityCopy);
 
-      var cartCurrent = getLocalStorageCartItems();
-      var itemQuantityCopy = {};
-      cartCurrent.map((item, index) => {
-        itemQuantityCopy[item.item_id] = item.quantity;
-      });
-      setItemQuantity(itemQuantityCopy);
-        
-    }, [pageData])
+  }, [pageData])
+
+  function addToCart(itemData){
+    var cartCurrent = getLocalStorageCartItems();
+
+    var exists = false;
+    cartCurrent = cartCurrent.map((value) => {
+      if (value.item_id === itemData.item_id){
+        exists = true;
+        var newValue = {...value};
+        newValue["quantity"] = value["quantity"] + 1;
+        return newValue;
+      }
+      else{
+        return value;
+      }
+    })
+
+    if (!exists){
+      const obj = {
+        "title": itemData.title,
+        "item_id": itemData.item_id,
+        "price": itemData.price,
+        "store_id": pageData.storeId,
+        "image_url": itemData.itemImage,
+        "quantity": 1
+      }
+      cartCurrent.push(obj);
+    }
+
+    setLocalStorageCartItems(cartCurrent);
+
+    var itemQuantityCopy = {};
+    cartCurrent.map((item, index) => {
+      itemQuantityCopy[item.item_id] = item.quantity;
+    });
+    setItemQuantity(itemQuantityCopy);
+  }
 
     return <Container maxW="5xl" centerContent textAlign="center" p={4}>
         <Box opacity={0.9} w="100%" bg="gray.900" mb={-24} borderRadius={12} overflow="hidden">
@@ -61,7 +97,7 @@ export default function Storefront({pageData}) {
                 section={section} 
                 storeId={pageData.storeId} 
                 itemQuantity={itemQuantity}
-                setItemQuantity={setItemQuantity}
+                addToCart={addToCart}
               />)}
 
 

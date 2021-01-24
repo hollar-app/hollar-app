@@ -8,7 +8,7 @@ import { useContext, useEffect, useReducer, useState } from "react";
 import { getLocalStorageCartItems, setLocalStorageCartItems } from "../../../util/localStorage";
 
 
-export default function Section({ section, storeId, itemQuantity, setItemQuantity }) {
+export default function Section({ section, storeId, itemQuantity, addToCart }) {
 
   // const [itemQuantity, setItemQuantity] = useState({})
 
@@ -17,23 +17,12 @@ export default function Section({ section, storeId, itemQuantity, setItemQuantit
   }, [])
 
   function onAddButton(id, title, price, itemImage, storeId) {
-    var foo = {...itemQuantity};
-    foo[id] = (itemQuantity[id]) ? itemQuantity[id] + 1 : 1;
-
-    setItemQuantity(foo);
-
-    const obj = {
-      "title": title,
-      "item_id": id,
-      "price": price,
-      "store_id": storeId,
-      "image_url": itemImage,
-      "quantity": itemQuantity[id] + 1
-    }
-
-    var cartCurrent = getLocalStorageCartItems();
-    cartCurrent.push(obj);
-    setLocalStorageCartItems(cartCurrent);
+    addToCart({ 
+      title: title, 
+      item_id: id, 
+      price: price, 
+      image_url: itemImage, 
+    });
   }
 
     return (<>
@@ -57,9 +46,9 @@ export default function Section({ section, storeId, itemQuantity, setItemQuantit
                                 objectFit="cover"
                                 src={value.itemImage}
                                 ml={3} />
-                            <Text fontSize="2xl" color="gray.500">{"title" in value && value.title}</Text>
-                            <Text fontSize="2xl" color="gray.500">{"description" in value && value.description}</Text>
-                            <Text fontSize="2xl" color="gray.500">${"price" in value && value.price}</Text>
+                            <Text fontSize="lg" color="gray.500">{"title" in value && value.title}</Text>
+                            <Text fontSize="lg" color="gray.500">{"description" in value && value.description}</Text>
+                            <Text fontSize="lg" color="gray.500">${"price" in value && value.price}</Text>
 
 
                           <HStack align="flex-start">

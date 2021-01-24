@@ -1,4 +1,4 @@
-import Navbar from "../../components/Navbar";
+import NavbarComplete from "../../components/NavbarComplete";
 import { Container, Text, Heading, VStack, Input, Button, HStack, Spacer, Box, Select, useToast } from "@chakra-ui/react";
 import stateNames from "../../util/stateNames";
 import { useContext, useEffect, useReducer, useState } from "react";
@@ -13,12 +13,9 @@ export default function StoreFront() {
     const router = useRouter()
     const axios = require("axios")
 
-    const [loadingStatus, setStatus] = useState('LOADING')
-
-
-    const { store_id } = router.query
-
-    const [menuData, setMenuData] = useState({})
+    const [loadingStatus, setStatus] = useState('LOADING');
+    const { store_id } = router.query;
+    const [menuData, setMenuData] = useState({});
 
     useEffect(() => {
         var getMenuData = fb.functions().httpsCallable('getStoreFrontMenu');
@@ -31,7 +28,7 @@ export default function StoreFront() {
     }, [])
 
     return <>
-        <Navbar showCart={true} links={[{title: 'Store Front', href: '/storefront/23'}, {title: 'Orders', href: '/business/orders'}, {title: 'Menu', href: '/business/menu'}, {title: 'Rewards', href: '/business/options'}, {title: 'Customers', href: '/business/options'}, {title: 'Store Info', href: '/business/options'}]}/>
-        <Storefront pageData={menuData} storeId={store_id}/>
+      <NavbarComplete showCart={true} />
+      <Storefront pageData={menuData} storeId={store_id}/>
     </>
 }
