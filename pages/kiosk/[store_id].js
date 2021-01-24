@@ -47,7 +47,7 @@ export default function() {
       totalCost: 6, 
       items: [
         {
-          cost: 2,
+          price: 2,
           imageURL: "https://images.unsplash.com/photo-1524904237821-786af6d620ca?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80", 
           quantity: 3, 
           title: "fruit cup"
@@ -57,13 +57,14 @@ export default function() {
   ]);
 
   useEffect(() => {
-    // var getOrders = fb.functions().httpsCallable('getOrders');
-    // getOrders({ storeId: store_id })
-    //   .then((result) => {
-    //     setPendingOrders(result.data.pendingOrders);
-    //     setCompletedOrders(result.data.completedOrders);
-    //   });
-  })
+    var getOrders = fb.functions().httpsCallable('getOrders');
+    getOrders({ storeId: store_id })
+      .then((result) => {
+        console.log(JSON.stringify(result.data));
+        setPendingOrders(result.data.pendingOrders);
+        setCompletedOrders(result.data.completedOrders);
+      });
+  }, [])
 
   function renderOrderList(isPending, dataList){
     return dataList.map((sectionObject, index) => 
@@ -93,10 +94,10 @@ export default function() {
 
           <TabPanels>
             <TabPanel>
-              { renderOrderList(true, data) }
+              { renderOrderList(true, pendingOrders) }
             </TabPanel>
             <TabPanel>
-              { renderOrderList(false, data) }
+              { renderOrderList(false, completedOrders) }
             </TabPanel>
             <TabPanel>
               Hello

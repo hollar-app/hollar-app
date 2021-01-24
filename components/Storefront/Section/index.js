@@ -23,7 +23,7 @@ export default function Section({ section, storeId, itemQuantity, setItemQuantit
     setItemQuantity(foo);
 
     const obj = {
-      "item": title,
+      "title": title,
       "item_id": id,
       "price": price,
       "store_id": storeId,

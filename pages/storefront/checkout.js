@@ -18,33 +18,36 @@ import { getLocalStorageCartItems, setLocalStorageCartItems } from "../../util/l
 
 export default function checkout(props){
 
-  const items = [
-    {
-      itemID: "blehhhhh", 
-      title: "fruit cup", 
-      imageURL: "https://images.unsplash.com/photo-1524904237821-786af6d620ca?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80", 
-      cost: 3, 
-      quantity: 1
-    }, 
-    {
-      itemID: "blaaaaaaaahh", 
-      title: "burger", 
-      imageURL: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1202&q=80", 
-      cost: 10, 
-      quantity: 2
-    }, 
-  ]
+  // const items = [
+  //   {
+  //     itemID: "blehhhhh", 
+  //     title: "fruit cup", 
+  //     imageURL: "https://images.unsplash.com/photo-1524904237821-786af6d620ca?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80", 
+  //     cost: 3, 
+  //     quantity: 1
+  //   }, 
+  //   {
+  //     itemID: "blaaaaaaaahh", 
+  //     title: "burger", 
+  //     imageURL: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1202&q=80", 
+  //     cost: 10, 
+  //     quantity: 2
+  //   }, 
+  // ]
 
-  // const [items, setItems] = useState([]);
+  const [items, setItems] = useState([]);
   const [form, setForm] = useState({});
 
   const [totalCost, setTotalCost] = useState(0);
   useEffect(() => {
 
-    // var storeID = localStorage.getItem('store_ID');
     // get user id from session storage (eg in components/navbar/index.js);
-    var cart = getLocalStorageCartItems();
-    setItems(cart);
+    var tempItems = getLocalStorageCartItems();
+    console.log("local storage in checkout");
+    console.log(JSON.stringify(tempItems));
+    var storeID = tempItems.store_id;
+    delete tempItems["storeID"];
+    setItems(tempItems);
 
     var total = 0;
     items.map((value, index) => {
@@ -57,10 +60,12 @@ export default function checkout(props){
       storeID: storeID, 
       totalCost: totalCost, 
     });
-  })
+  }, [])
 
   function sendOrder(){
-    setLocalStorageCartItems([]);
+    localStorage.clear();
+    var temp = getLocalStorageCartItems();
+    console.log("order sent")
     return;
   }
 
@@ -73,14 +78,13 @@ export default function checkout(props){
           <List spacing={4}>
             {items.map((item, index) => <>
               <ListItem key={index} lineHeight={1.25}>
-
                 <HStack>
-                  {item.imageURL &&
-                  <Image src={item.imageURL} w="24" h="24" mr={5} alt="" objectFit="cover" borderRadius={8}/>}
+                  {item.image_url&&
+                  <Image src={item.image_url} w="24" h="24" mr={5} alt="" objectFit="cover" borderRadius={8}/>}
 
                   <VStack align="start">
                     <Heading as="h3" size="lg">{item.title}</Heading>
-                    <Text fontSize="md" opacity={0.75}>{`$${item.cost} x ${item.quantity}`}</Text>
+                    <Text fontSize="md" opacity={0.75}>{`$${item.price} x ${item.quantity}`}</Text>
                   </VStack>
 
                 </HStack>
