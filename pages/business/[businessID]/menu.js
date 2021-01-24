@@ -1,6 +1,6 @@
 import BusinessPageLayout from "../../../components/business/BusinessPageLayout";
 import {useContext, useEffect, useState} from "react";
-import {HStack, Button, Popover, PopoverTrigger, Input, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody} from "@chakra-ui/react"
+import {HStack, CloseIcon, Button, Popover, PopoverTrigger, Input, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody} from "@chakra-ui/react"
 import BusinessContext from "../../../util/BusinessContext";
 import {AddIcon} from "@chakra-ui/icons"
 import Section from "../../../components/business/menu/Section";

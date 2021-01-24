@@ -34,7 +34,11 @@ export default function BusinessPageLayout({children, title}) {
         <Fade in={!loading}>
             <HStack w="100%" my={3} mx={[null, null, 9]} justifyContent={["center", null, "flex-start"]}>
                 <Text>You're currently editing </Text>
-                <Button ml={2} variant="link" colorScheme="blue">
+                <Button onClick={() => {
+                    toggleLoading(true)
+                    router.push('/business/select')
+                        .then(() => toggleLoading(false))
+                }} ml={2} variant="link" colorScheme="blue">
                     {storeData.businessName}
                 </Button>
             </HStack>
