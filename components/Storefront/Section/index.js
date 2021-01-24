@@ -1,6 +1,8 @@
-import { Image, Heading, Box, Text, VStack, HStack, StackDivider, Grid, GridItem } from "@chakra-ui/react";
+import { Button, Image, Heading, Box, Text, VStack, HStack, StackDivider, Grid, GridItem } from "@chakra-ui/react";
 import ListSection from "./ListSection";
 import GridSection from "./GridSection";
+
+import { AddIcon } from "@chakra-ui/icons"
 
 import { useContext, useEffect, useReducer, useState } from "react";
 
@@ -19,13 +21,14 @@ export default function Section({ section }) {
 
                 return (
                     <>
-                        {index == 0 && <Grid templateColumns="repeat(4, 1fr)" gap={3}>
+                        {index == 0 && <Grid templateColumns="repeat(5, 1fr)" gap={3}>
                             <Text fontSize="2xl"></Text>
                             <Text fontSize="2xl">Item</Text>
                             <Text fontSize="2xl">Description</Text>
                             <Text fontSize="2xl">Price</Text>
+                            <Text fontSize="2xl"></Text>
                         </Grid>}
-                        <Grid templateColumns="repeat(4, 1fr)" gap={6} pb={4}>
+                        <Grid templateColumns="repeat(5, 1fr)" gap={6} pb={4}>
                             <Image borderRadius="full"
                                 boxSize="150px"
                                 objectFit="cover"
@@ -34,6 +37,10 @@ export default function Section({ section }) {
                             <Text fontSize="2xl" color="gray.500">{"title" in value && value.title}</Text>
                             <Text fontSize="2xl" color="gray.500">{"description" in value && value.description}</Text>
                             <Text fontSize="2xl" color="gray.500">${"price" in value && value.price}</Text>
+                            
+                            <Button variant="outline" size="sm" w="50%" leftIcon={<AddIcon/>} >
+                                <Text>cart</Text>
+                            </Button>
                         </Grid>
 
                     </>)
