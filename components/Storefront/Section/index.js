@@ -22,17 +22,30 @@ export default function Section({ section, storeId, itemQuantity, setItemQuantit
 
     setItemQuantity(foo);
 
-    const obj = {
-      "title": title,
-      "item_id": id,
-      "price": price,
-      "store_id": storeId,
-      "image_url": itemImage,
-      "quantity": itemQuantity[id] + 1
+    var cartCurrent = getLocalStorageCartItems();
+
+    var exists = false;
+    cartCurrent = cartCurrent.map((value) => {
+      if (value && value.item_id === id){
+        exists = true;
+        var newValue = {...value};
+        newValue[quantity] = itemQuantity[id] + 1;
+        return newValue;
+      }
+    })
+
+    if (!exists){
+      cartCurrent.push(obj);
+      const obj = {
+        "title": title,
+        "item_id": id,
+        "price": price,
+        "store_id": storeId,
+        "image_url": itemImage,
+        "quantity": itemQuantity[id] + 1
+      }
     }
 
-    var cartCurrent = getLocalStorageCartItems();
-    cartCurrent.push(obj);
     setLocalStorageCartItems(cartCurrent);
   }
 

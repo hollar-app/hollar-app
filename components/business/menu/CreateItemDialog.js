@@ -43,7 +43,9 @@ export default function CreateItemDialog({isOpen, onClose, formData, sectionID, 
                             <Textarea id="description" defaultValue={formData.description}
                                       placeholder="Item Description"/>
                             <Flex justifyContent="flex-start" w="100%">
-                                <Button variant="outline">Upload Image</Button>
+                                <Button variant="outline">
+                                  <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" />
+                                </Button>
                             </Flex>
                         </VStack>
 
