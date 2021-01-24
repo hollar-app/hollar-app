@@ -77,14 +77,14 @@ export default function() {
 
   return(
     <>
-      <Center bg="white" color="black" h="100px">
+      <Center bg="white" color="black" h="180px" w="100%">
         <Heading>
           STOREEEEEE ID: {store_id}
         </Heading>
       </Center>
 
-      <Center>
-        <Tabs isFitted>
+      <Center my={5}>
+        <Tabs isFitted w="50%">
           <TabList>
             <Tab>Pending</Tab>
             <Tab>Completed</Tab>

@@ -42,9 +42,9 @@ export default function({ isPending, order }) {
 
   return(
     <>
-      <Box w="100%" p={4} m={5} color="white">
+      <Box w="100%" borderWidth={0.25} borderRadius={8} mb={4} p={5}>
 
-        <HStack>
+        <HStack justify="center">
           <VStack mx={5}> {renderCheckBox()} </VStack>
 
           <VStack align="flex-start" mx={5}>
@@ -74,7 +74,7 @@ export default function({ isPending, order }) {
               <Button ref={cancelRef} onClick={onClose}>
                 Cancel
               </Button>
-              <Button colorScheme="red" onClick={alertCompleteOrder} ml={3}>
+              <Button colorScheme="red" onClick={alertCompleteOrder} mx={3}>
                 Complete Order
               </Button>
             </AlertDialogFooter>
