@@ -60,6 +60,7 @@ export default function() {
     var getOrders = fb.functions().httpsCallable('getOrders');
     getOrders({ storeId: store_id })
       .then((result) => {
+        console.log(JSON.stringify(result));
         console.log(JSON.stringify(result.data));
         setPendingOrders(result.data.pendingOrders);
         setCompletedOrders(result.data.completedOrders);

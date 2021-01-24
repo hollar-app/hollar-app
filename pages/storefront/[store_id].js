@@ -13,12 +13,9 @@ export default function StoreFront() {
     const router = useRouter()
     const axios = require("axios")
 
-    const [loadingStatus, setStatus] = useState('LOADING')
-
-
-    const { store_id } = router.query
-
-    const [menuData, setMenuData] = useState({})
+    const [loadingStatus, setStatus] = useState('LOADING');
+    const { store_id } = router.query;
+    const [menuData, setMenuData] = useState({});
 
     useEffect(() => {
         var getMenuData = fb.functions().httpsCallable('getStoreFrontMenu');

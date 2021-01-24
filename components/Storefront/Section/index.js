@@ -8,7 +8,7 @@ import { useContext, useEffect, useReducer, useState } from "react";
 import { getLocalStorageCartItems, setLocalStorageCartItems } from "../../../util/localStorage";
 
 
-export default function Section({ section, storeId, itemQuantity, setItemQuantity }) {
+export default function Section({ section, storeId, itemQuantity, addToCart }) {
 
   // const [itemQuantity, setItemQuantity] = useState({})
 
@@ -17,36 +17,13 @@ export default function Section({ section, storeId, itemQuantity, setItemQuantit
   }, [])
 
   function onAddButton(id, title, price, itemImage, storeId) {
-    var foo = {...itemQuantity};
-    foo[id] = (itemQuantity[id]) ? itemQuantity[id] + 1 : 1;
-
-    setItemQuantity(foo);
-
-    var cartCurrent = getLocalStorageCartItems();
-
-    var exists = false;
-    cartCurrent = cartCurrent.map((value) => {
-      if (value && value.item_id === id){
-        exists = true;
-        var newValue = {...value};
-        newValue[quantity] = itemQuantity[id] + 1;
-        return newValue;
-      }
-    })
-
-    if (!exists){
-      cartCurrent.push(obj);
-      const obj = {
-        "title": title,
-        "item_id": id,
-        "price": price,
-        "store_id": storeId,
-        "image_url": itemImage,
-        "quantity": itemQuantity[id] + 1
-      }
-    }
-
-    setLocalStorageCartItems(cartCurrent);
+    addToCart({ 
+      title: title, 
+      item_id: id, 
+      price: price, 
+      storeId: storeId, 
+      image_url: itemImage, 
+    });
   }
 
     return (<>
