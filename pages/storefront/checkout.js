@@ -14,7 +14,7 @@ import {
     List, ListItem, AspectRatio, HStack, VStack, 
     Divider
 } from "@chakra-ui/react";
-import { getLocalStorageCartItems, setLocalStorageCartItems } from "../../../util/localStorage";
+import { getLocalStorageCartItems, setLocalStorageCartItems } from "../../util/localStorage.js";
 
 export default function checkout(props){
 
