@@ -10,6 +10,7 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
 } from "@chakra-ui/react";
+import fb from "../../util/firebaseConfig";
 
 export default function({ isPending, order }) {
 
@@ -19,20 +20,22 @@ export default function({ isPending, order }) {
 
   function renderItems(items){
     return items.map((item, index) => {
-      return <VStack key={index} align="flex-start" mx={5}>
-        <Text> x{item.quantity} {item.title} </Text>
-      </VStack>
+      return <Text key={index}> x{item.quantity} {item.title} </Text>
     });
   }
 
   function alertCompleteOrder(){
     console.log("order completed!!");
+    console.log(JSON.stringify(order, null, 2));
     setShowAlert(false);
-    // var completeOrder = fb.functions().httpsCallable('completeOrder');
-    // completeOrder({ storeId: store_id })
-    //   .then((result) => {
-    //     console.log(JSON.stringify(result.data));
-    //   });
+
+    var completeOrder = fb.functions().httpsCallable('completeOrder');
+    completeOrder({ orderId: order.orderID })
+    .then((result) => {
+      const results = result.data;
+      console.log(results);
+    });
+ 
   }
 
   function renderCheckBox() {
@@ -44,15 +47,16 @@ export default function({ isPending, order }) {
     <>
       <Box w="100%" borderWidth={0.25} borderRadius={8} mb={4} p={5}>
 
-        <HStack justify="center">
-          <VStack mx={5}> {renderCheckBox()} </VStack>
+        <HStack justify="space-between">
+          <HStack>
+            <VStack align="flex-start" mx={5}> {renderCheckBox()} </VStack>
+            <VStack align="flex-start" mx={5}>
+              <Heading> Order for { order.customer.name } </Heading>
+              <Heading> Total: ${ order.totalCost } </Heading>
+            </VStack>
+          </HStack>
 
-          <VStack align="flex-start" mx={5}>
-            <Heading> Order for { order.customer.name } </Heading>
-            <Heading> Total: ${ order.totalCost } </Heading>
-          </VStack>
-
-          <VStack>
+          <VStack align="flex-end">
             { renderItems(order.items) }
           </VStack>
         </HStack>

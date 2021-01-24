@@ -57,7 +57,7 @@ export default function Storefront({pageData}) {
         "title": itemData.title,
         "item_id": itemData.item_id,
         "price": itemData.price,
-        "store_id": itemData.storeId,
+        "store_id": pageData.storeId,
         "image_url": itemData.itemImage,
         "quantity": 1
       }

@@ -21,7 +21,6 @@ export default function Section({ section, storeId, itemQuantity, addToCart }) {
       title: title, 
       item_id: id, 
       price: price, 
-      storeId: storeId, 
       image_url: itemImage, 
     });
   }

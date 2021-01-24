@@ -1,5 +1,7 @@
 
+import NavbarComplete from "../../components/NavbarComplete";
 import { useContext, useEffect, useReducer, useState } from "react";
+import fb from "../../util/firebaseConfig";
 import {
     Avatar,
     Box,
@@ -14,11 +16,12 @@ import {
     List, ListItem, AspectRatio, HStack, VStack, 
     Divider
 } from "@chakra-ui/react";
-import NavbarComplete from "../../components/NavbarComplete";
 import { getLocalStorageCartItems, setLocalStorageCartItems } from "../../util/localStorage.js";
+import SessionContext from "../../util/SessionContext";
 
 export default function checkout(props){
 
+  const {status, user} = useContext(SessionContext)
   const [items, setItems] = useState([]);
   const [form, setForm] = useState({});
 
@@ -28,20 +31,24 @@ export default function checkout(props){
     var tempItems = getLocalStorageCartItems();
     console.log("local storage in checkout");
     console.log(JSON.stringify(tempItems));
-    var storeID = tempItems.store_id;
-    delete tempItems["storeID"];
+    var storeID = tempItems["store_id"];
+    delete tempItems["store_id"];
     setItems(tempItems);
 
     var total = 0;
     tempItems.forEach((value, index) => {
-      console.log("%c total: " + total, "background-color: purple");
       total += value.price.toString() * value.quantity;
     });
 
     setForm({
+      customer: {
+        name: user.displayName, 
+        id: user.uid
+      }, 
       items: tempItems,
       storeID: storeID, 
       totalCost: total, 
+      completed: false
     });
   }, [])
 
@@ -49,6 +56,14 @@ export default function checkout(props){
     localStorage.clear();
     var temp = getLocalStorageCartItems();
     console.log("order sent")
+    console.log(JSON.stringify(form, null, 2));
+
+    var createOrder = fb.functions().httpsCallable('createOrder');
+    createOrder({ order: form })
+      .then((result) => {
+        console.log(JSON.stringify(result.data));
+      });
+
     return;
   }
 

@@ -1,3 +1,5 @@
+
+import NavbarComplete from "../../components/NavbarComplete";
 import React, {useContext, useState, useEffect} from "react";
 import {useRouter} from "next/router";
 import { Heading, Container, Box } from "@chakra-ui/react";
@@ -17,7 +19,7 @@ export default function() {
     var getOrders = fb.functions().httpsCallable('getOrders');
     getOrders({ storeId: store_id })
       .then((result) => {
-        console.log(JSON.stringify(result.data));
+        console.log(JSON.stringify(result.data, null, 2));
         setPendingOrders(result.data.pendingOrders);
         setCompletedOrders(result.data.completedOrders);
       });
@@ -35,6 +37,7 @@ export default function() {
 
   return(
     <>
+      <NavbarComplete />
       <Center bg="white" color="black" h="180px" w="100%">
         <Heading>
           STOREEEEEE ID: {store_id}
