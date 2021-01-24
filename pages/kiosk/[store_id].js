@@ -40,7 +40,7 @@ export default function() {
       <NavbarComplete />
       <Center bg="white" color="black" h="180px" w="100%">
         <Heading>
-          STOREEEEEE ID: {store_id}
+          Store Id: {store_id}
         </Heading>
       </Center>
 
