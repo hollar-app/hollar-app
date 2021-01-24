@@ -14,17 +14,26 @@ import {
 import {PhoneIcon, LinkIcon, WarningIcon} from '@chakra-ui/icons'
 import Section from "./Section";
 import { useContext, useEffect, useReducer, useState } from "react";
+import { getLocalStorageCartItems, setLocalStorageCartItems } from "../../util/localStorage";
 
 export default function Storefront({pageData}) {
 
+    const [itemQuantity, setItemQuantity] = useState({});
+
     useEffect(() => {
-        console.log("in the page store front view")
-        console.log(pageData.sections) 
+        // console.log(pageData.sections) 
         if (pageData.sections != undefined) {
             pageData.sections.map((val, index, arr) => {
                 console.log("in the map ==>", val)
             })   
         }
+
+      var cartCurrent = getLocalStorageCartItems();
+      var itemQuantityCopy = {};
+      cartCurrent.map((item, index) => {
+        itemQuantityCopy[item.item_id] = item.quantity;
+      });
+      setItemQuantity(itemQuantityCopy);
         
     }, [pageData])
 
@@ -47,7 +56,13 @@ export default function Storefront({pageData}) {
             </Center>
             <Divider my={8}/>
 
-            {pageData.sections != undefined && pageData.sections.map(section => <Section section={section} storeId={pageData.storeId}/>)}
+            {pageData.sections != undefined && pageData.sections.map(section => 
+              <Section 
+                section={section} 
+                storeId={pageData.storeId} 
+                itemQuantity={itemQuantity}
+                setItemQuantity={setItemQuantity}
+              />)}
 
 
         </Box>
