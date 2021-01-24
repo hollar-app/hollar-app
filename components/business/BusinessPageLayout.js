@@ -1,4 +1,5 @@
 import Navbar from "../Navbar";
+import NavbarComplete from "../NavbarComplete";
 import {useEffect, useState} from "react";
 import fb from "../../util/firebaseConfig";
 import {useRouter} from "next/router";
@@ -29,7 +30,7 @@ export default function BusinessPageLayout({children, title}) {
     }, [])
 
     return <BusinessContext.Provider value={storeData}>
-        <Navbar links={links} loading={loading}/>
+        <NavbarComplete loading={loading}/>
 
         <Fade in={!loading}>
             <HStack w="100%" my={3} mx={[null, null, 9]} justifyContent={["center", null, "flex-start"]}>
