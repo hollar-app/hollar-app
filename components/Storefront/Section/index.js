@@ -47,9 +47,9 @@ export default function Section({ section, storeId, itemQuantity, addToCart }) {
                                 objectFit="cover"
                                 src={value.itemImage}
                                 ml={3} />
-                            <Text fontSize="2xl" color="gray.500">{"title" in value && value.title}</Text>
-                            <Text fontSize="2xl" color="gray.500">{"description" in value && value.description}</Text>
-                            <Text fontSize="2xl" color="gray.500">${"price" in value && value.price}</Text>
+                            <Text fontSize="lg" color="gray.500">{"title" in value && value.title}</Text>
+                            <Text fontSize="lg" color="gray.500">{"description" in value && value.description}</Text>
+                            <Text fontSize="lg" color="gray.500">${"price" in value && value.price}</Text>
 
 
                           <HStack align="flex-start">

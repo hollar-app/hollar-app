@@ -14,7 +14,7 @@ import {
     List, ListItem, AspectRatio, HStack, VStack, 
     Divider
 } from "@chakra-ui/react";
-import Navbar from "../../components/Navbar";
+import NavbarComplete from "../../components/NavbarComplete";
 import { getLocalStorageCartItems, setLocalStorageCartItems } from "../../util/localStorage.js";
 
 export default function checkout(props){
@@ -54,7 +54,8 @@ export default function checkout(props){
 
   return(
     <>
-      <Navbar links={[{title: 'Store Front', href: '/storefront/23'}, {title: 'Orders', href: '/business/orders'}, {title: 'Menu', href: '/business/menu'}, {title: 'Rewards', href: '/business/options'}, {title: 'Customers', href: '/business/options'}, {title: 'Store Info', href: '/business/options'}]}/>
+      <NavbarComplete />
+
 
       <Container maxW="5xl" centerContent textAlign="center" p={4}>
         <Box opacity={0.9} w="50%" my={10} borderRadius={12} overflow="hidden">
