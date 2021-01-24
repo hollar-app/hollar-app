@@ -47,7 +47,7 @@ export default function Storefront({pageData}) {
             </Center>
             <Divider my={8}/>
 
-            {pageData.sections != undefined && pageData.sections.map(section => <Section section={section}/>)}
+            {pageData.sections != undefined && pageData.sections.map(section => <Section section={section} storeId={pageData.storeId}/>)}
 
 
         </Box>
