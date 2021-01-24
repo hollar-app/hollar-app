@@ -17,13 +17,12 @@ import {useContext} from "react";
 import SessionContext from "../../util/SessionContext";
 import {useRouter} from "next/router";
 import SidebarMenu from "./SidebarMenu";
+import { AiOutlineShoppingCart } from 'react-icons/ai';
 
-export default function Navbar({links = [], loading}) {
+export default function Navbar({links = [], loading, showCart=false}) {
     const {status, user} = useContext(SessionContext)
     const router = useRouter()
     const {colorMode, toggleColorMode} = useColorMode()
-
-
     return <>
 
         <Box px={3} py={2} borderBottomWidth={0.2}>
@@ -42,6 +41,13 @@ export default function Navbar({links = [], loading}) {
                     </Box>
                 </HStack>
                 <Spacer/>
+
+                {showCart && localStorage.getItem("hollar-cart") != undefined && 
+                    <Text>Items in cart: {localStorage.get("hollar-cart").length}</Text>
+                }
+                {showCart && localStorage.getItem("hollar-cart") == undefined && 
+                    <> <AiOutlineShoppingCart size={25}/> <Text>No items in cart</Text></>
+                }
 
                 <HStack spacing={1}>
                     {/*Account menu if authenticated, otherwise displays LOGIN/SIGNUP buttons*/}
